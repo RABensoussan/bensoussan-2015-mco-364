@@ -2,43 +2,79 @@ package bensoussan.snake;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
+
 import javax.swing.JComponent;
 
 public class Grid extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private final int SIZEOFGRID = 25;
+	private final int cellsInGrid;
 	private String direction;
-	private boolean eaten;
+	private Snake snake;
+	private Point food;
+	private Random rand;
+
+	public Grid(int width, int height) {
+		setSize(width, height);
+		cellsInGrid = 25;
+		rand = new Random();
+		Point head = new Point(rand.nextInt(cellsInGrid),
+				rand.nextInt(cellsInGrid - 3)); // give room for three points
+												// underneath the head
+		snake = new Snake(head);
+		food = new Point(rand.nextInt(cellsInGrid), rand.nextInt(cellsInGrid));
+		direction = "UP";
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		int w = getWidth() / SIZEOFGRID;
-		int h = getHeight() / SIZEOFGRID;
+		int w = getWidth() / cellsInGrid;
+		int h = getHeight() / cellsInGrid;
 
-		// paint background of GRID
-		for (int i = 0; i < SIZEOFGRID; i++) {
-			for (int j = 0; j < SIZEOFGRID; j++) {
+		paintGrid(g, w, h);
+
+		drawFood(g, w, h);
+
+		checkDirection();
+
+		paintSnake(g, w, h);
+
+	}
+
+	private void drawFood(Graphics g, int w, int h) {
+		if (food.equals(snake.getHead())) {
+			snake.eatFood();
+			food = new Point(rand.nextInt(cellsInGrid), rand.nextInt(cellsInGrid));
+		}
+		g.setColor(Color.RED);
+		g.fillOval(w * food.getX(), h * food.getY(), w, h);
+	}
+
+	private void paintGrid(Graphics g, int w, int h) {
+		for (int i = 0; i < cellsInGrid; i++) {
+			for (int j = 0; j < cellsInGrid; j++) {
 				g.setColor(Color.GRAY);
 				g.fillRect(w * i, h * j, w, h);
 			}
 		}
+	}
 
-		// FOOD at random location
-		Random rand = new Random();
-		int foodX = rand.nextInt(SIZEOFGRID);
-		int foodY = rand.nextInt(SIZEOFGRID);
-		g.setColor(Color.RED);
-		g.fillOval(w * foodX, h * foodY, w, h);
+	private void paintSnake(Graphics g, int w, int h) {
+		LinkedList<Point> snakeList = snake.getSnake();
+		Iterator<Point> iter = snakeList.iterator();
+		while (iter.hasNext()) {
+			Point temp = iter.next();
+			g.setColor(Color.BLACK);
+			g.fillRect(w * temp.getX(), h * temp.getY(), w, h);
+		}
+	}
 
-		// SNAKE!
-		Point head = new Point(rand.nextInt(SIZEOFGRID),
-				rand.nextInt(SIZEOFGRID - 2)); // give room for two points
-												// underneath the head
-		Snake snake = new Snake(head);
+	private void checkDirection() {
 		switch (direction) {
 		case "UP":
 			snake.moveUp();
@@ -53,7 +89,6 @@ public class Grid extends JComponent {
 			snake.moveRight();
 			break;
 		}
-
 	}
 
 	public void setDirection(String d) {

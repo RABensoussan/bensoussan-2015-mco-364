@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 
 public class Frame extends JFrame implements KeyListener {
@@ -16,11 +17,11 @@ public class Frame extends JFrame implements KeyListener {
 		setTitle("Snake");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-
+ 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
-		grid = new Grid();
-		contentPane.add(grid);
+		grid = new Grid(this.getWidth(), this.getHeight());
+		contentPane.add(grid, BorderLayout.CENTER);
 		grid.addKeyListener(this);
 		grid.setFocusable(true);
 
@@ -30,6 +31,18 @@ public class Frame extends JFrame implements KeyListener {
 		Frame aFrame = new Frame();
 		aFrame.setVisible(true);
 
+		Thread t = new Thread() {
+			public void run() {
+				while (true) {
+					aFrame.repaint();
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+					}
+				}
+			}
+		};
+		t.start();
 	}
 
 	@Override
