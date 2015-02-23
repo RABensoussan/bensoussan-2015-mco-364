@@ -8,7 +8,11 @@ import javax.swing.JComponent;
 public class SmileComponent extends JComponent {
 
 	private static final long serialVersionUID = 1L;
-	private boolean wink = true;
+	private boolean wink;
+	
+	public SmileComponent(){
+		wink = true;
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -24,7 +28,7 @@ public class SmileComponent extends JComponent {
 			wink = false;
 		} else {
 			g.setColor(Color.BLACK);
-			g.drawArc(w / 3, h / 6 , w / 12, h / 12, 0, 125);// wink
+			g.drawArc(w / 3 , h / 6 , w / 12, h / 12, 0, 125);// wink
 			wink = true;
 		}
 		g.setColor(Color.BLUE);
