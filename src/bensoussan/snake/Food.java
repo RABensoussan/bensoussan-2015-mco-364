@@ -1,4 +1,4 @@
-package bensoussan.snake2;
+package bensoussan.snake;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,7 +17,7 @@ public class Food {
 
 	public Graphics paint(Graphics g, int w, int h) {
 		g.setColor(Color.RED);
-		g.fillOval(x*w, y*h, w, h);
+		g.fillOval(x * w, y * h, w, h);
 		return g;
 	}
 

@@ -1,8 +1,9 @@
-package bensoussan.snake2;
+package bensoussan.snake;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 
 public class World {
 
@@ -19,7 +20,9 @@ public class World {
 		this.w = w;
 		this.h = h;
 		snake = new Snake(sizeOfGrid);
-		food = new Food(sizeOfGrid);
+		do {
+			food = new Food(sizeOfGrid);
+		} while (foodOnSnake());
 		keyCode = KeyEvent.VK_UP;
 	}
 
@@ -42,11 +45,23 @@ public class World {
 
 		if (snake.getHead().equals(food.getPoint())) {
 			snake.eat();
-			food = new Food(sizeOfGrid);
+			do {
+				food = new Food(sizeOfGrid);
+			} while (foodOnSnake());
 		}
 	}
 
-	public boolean didYouLose() {
+	private boolean foodOnSnake() {
+		Iterator<Point> iter = snake.iterator();
+		while (iter.hasNext()) {
+			if (iter.next().equals(food)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean lostGame() {
 		boolean bump = snake.bumped();
 		boolean wall = snake.wall();
 		if (bump || wall) {
@@ -83,6 +98,10 @@ public class World {
 		g = snake.paint(g, w, h);
 		g = food.paint(g, w, h);
 		return g;
+	}
+
+	public void gameOver() {
+
 	}
 
 }

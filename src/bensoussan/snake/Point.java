@@ -1,5 +1,8 @@
 package bensoussan.snake;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 public class Point {
 
 	private int x;
@@ -7,14 +10,6 @@ public class Point {
 
 	public Point(int x, int y) {
 		this.x = x;
-		this.y = y;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public void setY(int y) {
 		this.y = y;
 	}
 
@@ -27,11 +22,17 @@ public class Point {
 	}
 
 	public boolean equals(Point b) {
-		if (this.x == b.getX() && this.y == b.getY()) {
+		if (x == b.getX() && y == b.getY()) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	public Graphics drawPoint(Graphics g, int w, int h) {
+		g.setColor(Color.GREEN);
+		g.fillRect(x * w, y * h, w, h);
+		return g;
 	}
 
 }

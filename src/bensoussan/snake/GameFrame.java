@@ -1,11 +1,10 @@
-package bensoussan.snake2;
+package bensoussan.snake;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
 import javax.swing.JFrame;
 
 public class GameFrame extends JFrame implements KeyListener {
@@ -13,6 +12,9 @@ public class GameFrame extends JFrame implements KeyListener {
 	private static final long serialVersionUID = 1L;
 	private WorldComponent comp;
 	private int sizeOfGrid;
+
+	// private Timer timer;
+	// private JLabel time;
 
 	public GameFrame() {
 
@@ -29,7 +31,17 @@ public class GameFrame extends JFrame implements KeyListener {
 		comp = new WorldComponent(25, 25, sizeOfGrid);
 		comp.addKeyListener(this);
 		comp.setFocusable(true);
-		contentPane.add(comp);
+		contentPane.add(comp, BorderLayout.CENTER);
+
+		/*
+		 * Container northCont = new Container(); northCont.setLayout(new
+		 * BorderLayout()); northCont.setBackground(Color.ORANGE); JLabel
+		 * snakeTitle = new JLabel("Snake"); snakeTitle.setFont(new
+		 * Font("Britannic Bold", Font.PLAIN, 20)); northCont.add(snakeTitle,
+		 * BorderLayout.CENTER); timer = new Timer(); time = new
+		 * JLabel(timer.toString()); northCont.add(time, BorderLayout.EAST);
+		 * contentPane.add(northCont, BorderLayout.NORTH);
+		 */
 	}
 
 	public WorldComponent getComp() {
@@ -41,21 +53,26 @@ public class GameFrame extends JFrame implements KeyListener {
 		SNAKE.setVisible(true);
 		Thread t = new Thread() {
 			public void run() {
+				int timer = 800;
 				while (true) {
-					SNAKE.getComp().getWorld().move();
-					if (SNAKE.getComp().getWorld().didYouLose()) {
+					if (SNAKE.getComp().getWorld().lostGame()) {
+						SNAKE.getComp().gameOver();
+						SNAKE.repaint();
 						break;
 					}
+					SNAKE.getComp().getWorld().move();
 					SNAKE.repaint();
 					try {
-						Thread.sleep(500);
+						if (timer > 300) {
+							timer -= 5;
+						}
+						Thread.sleep(timer);
 					} catch (InterruptedException e) {
 					}
 				}
 			}
 		};
 		t.start();
-
 	}
 
 	@Override
