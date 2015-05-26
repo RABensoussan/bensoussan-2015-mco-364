@@ -53,7 +53,7 @@ public class GameFrame extends JFrame implements KeyListener {
 		SNAKE.setVisible(true);
 		Thread t = new Thread() {
 			public void run() {
-				int timer = 800;
+				int timer = 600;
 				while (true) {
 					if (SNAKE.getComp().getWorld().lostGame()) {
 						SNAKE.getComp().gameOver();

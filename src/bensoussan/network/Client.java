@@ -25,10 +25,13 @@ public class Client {
 		} catch (IOException e) {
 		} catch (InterruptedException e) {
 		} finally {
-			try {
-				socket.close();
+			/*try {
+				if (socket != null) {
+					socket.close();
+				}
 			} catch (IOException e) {
-			}
+			}*/
+			IOUtils.closeQuietly(socket);
 		}
 	}
 }
