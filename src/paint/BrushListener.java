@@ -15,12 +15,10 @@ public abstract class BrushListener implements MouseListener,
 	protected int currY;
 	protected int lastX;
 	protected int lastY;
-	private Graphics tempImage;
 
 	public BrushListener(Canvas canvas) {
 		this.canvas = canvas;
 	}
-
 
 	public Canvas getCanvas() {
 		return canvas;
