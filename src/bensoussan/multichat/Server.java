@@ -5,16 +5,20 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Server extends Thread implements Connector {
 
 	private ArrayList<Socket> sockets;
 	private ArrayList<PrintWriter> writers;
+	private LinkedBlockingQueue<String> incomingChats;
 
 	public Server() {
 
 		sockets = new ArrayList<Socket>();
 		writers = new ArrayList<PrintWriter>();
+		incomingChats = new LinkedBlockingQueue<String>();
+		new IncomingChatsThread(incomingChats, writers).start();
 
 	}
 
@@ -38,11 +42,8 @@ public class Server extends Thread implements Connector {
 
 	@Override
 	public void receivedText(String line) {
-		for (PrintWriter writer : writers) {
-			writer.println(line);
-			writer.flush();
-			System.out.println("Server wrote the chat: " + line);
-		}
+
+		incomingChats.add(line);
 
 	}
 
