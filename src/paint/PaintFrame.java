@@ -20,10 +20,9 @@ public class PaintFrame extends JFrame {
 		Canvas canvas = new Canvas(800, 600);
 		add(canvas, BorderLayout.CENTER);
 		BrushListener listener = new PencilListener(canvas);
-		canvas.addMouseListener(listener);
-		canvas.addMouseMotionListener(listener);
+		canvas.setListener(listener);
 
-		ColorsPanel colorsPanel = new ColorsPanel(listener);
+		ColorsPanel colorsPanel = new ColorsPanel(canvas);
 		add(colorsPanel, BorderLayout.WEST);
 		
 		BrushPanel pencilPanel = new BrushPanel(listener);

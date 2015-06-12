@@ -10,7 +10,7 @@ public class PencilListener extends BrushListener{
 	
 	@Override
 	public void draw(Graphics g) {
-		g.setColor(this.color);
+		g.setColor(canvas.getColor());
 		g.drawLine(lastX, lastY, currX, currY);
 	}
 

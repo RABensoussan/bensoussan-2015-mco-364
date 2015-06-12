@@ -13,7 +13,7 @@ public class ColorsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public ColorsPanel(BrushListener listener) {
+	public ColorsPanel(final Canvas canvas) {
 		setLayout(new GridLayout(6, 2));
 
 		Color[] colors = new Color[] { Color.BLACK, Color.DARK_GRAY,
@@ -32,7 +32,7 @@ public class ColorsPanel extends JPanel {
 					@Override
 					public void actionPerformed(ActionEvent event) {
 						JButton buttonClicked = (JButton) event.getSource();
-						listener.setColor(buttonClicked.getBackground());
+						canvas.setColor(buttonClicked.getBackground());
 					}
 
 				});

@@ -1,6 +1,5 @@
 package paint;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,23 +8,19 @@ import java.awt.event.MouseMotionListener;
 public abstract class BrushListener implements MouseListener,
 		MouseMotionListener {
 
-	private Canvas canvas;
+	protected Canvas canvas;
 	protected int startX;
 	protected int startY;
 	protected int currX;
 	protected int currY;
 	protected int lastX;
 	protected int lastY;
-	protected Color color;
+	private Graphics tempImage;
 
 	public BrushListener(Canvas canvas) {
 		this.canvas = canvas;
-		this.color = Color.BLACK;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
 
 	public Canvas getCanvas() {
 		return canvas;
@@ -73,7 +68,6 @@ public abstract class BrushListener implements MouseListener,
 		currY = startY;
 		lastX = startX;
 		lastY = startY;
-		draw(canvas.getImage().getGraphics());
 		canvas.repaint();
 	}
 
