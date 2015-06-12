@@ -41,6 +41,7 @@ public class Server extends Thread implements Connector {
 		for (PrintWriter writer : writers) {
 			writer.println(line);
 			writer.flush();
+			System.out.println("Server wrote the chat: " + line);
 		}
 
 	}

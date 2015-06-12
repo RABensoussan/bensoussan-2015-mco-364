@@ -11,9 +11,11 @@ public class Client implements Connector {
 
 	private JTextArea inChats;
 	private PrintWriter writer;
+	private String name;
 
-	public Client(JTextArea inChats) {
+	public Client(JTextArea inChats, String name) {
 		this.inChats = inChats;
+		this.name = name;
 
 		try {
 			Socket socket = new Socket("localhost", 2002);
@@ -32,6 +34,7 @@ public class Client implements Connector {
 
 	@Override
 	public void receivedText(String text) {
+		System.out.println(name + " received the chat: " + text);
 		inChats.setFont(new Font("Arial", 12, Font.PLAIN));
 		inChats.append("\n");
 		inChats.append(text);

@@ -29,7 +29,7 @@ public class ClientFrame extends JFrame {
 		setTitle(name + "'s Chat");
 		setSize(600, 400);
 
-		client = new Client(inChats);
+		client = new Client(inChats, name);
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
